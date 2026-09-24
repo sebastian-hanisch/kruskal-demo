@@ -1,5 +1,7 @@
 # Kruskal – der billigste Weg, alle zu verbinden – Streamlit-Demo
 
+**[→ Demo live ausprobieren](https://sebastianhanisch-kruskal-demo.streamlit.app/)**
+
 Erstes Stück (Wurzel) der **Spannbaum-Reihe** der "Konzepte"-Reihe für die Website "Sebastian Hanisch – Operations Research und Machine Learning". Ein Depot und n Filialen liegen auf einer Karte; gesucht ist das Leitungsnetz (Fernwärme, Glasfaser, Sammelleitung), das **alle** verbindet und dabei möglichst wenig Trasse kostet: ein **minimaler Spannbaum** (MST). **Kruskal** (1956) sortiert alle möglichen Verbindungen nach Kosten und geht sie der Reihe nach durch: eine Kante wird **angenommen**, wenn sie zwei bisher getrennte Gruppen verbindet, und **verworfen**, wenn sie einen Kreis schließen würde. Die Frage "sind diese beiden schon verbunden?" beantwortet **Union-Find**. Der Baum wächst nicht von einem Punkt aus, sondern aus vielen kleinen Komponenten zusammen.
 
 **Einordnung in die Reihe:** im Portfolio gab es zu Spannbäumen bisher nichts (Kanten hierher: Single-Linkage-Clustering in [agglomerative-demo](../agglomerative-demo) ist ein MST auf Distanzen; die Basislösung des Netzwerksimplex in [network-flow-demo](../network-flow-demo) ist ein Spannbaum; der Kürzeste-Wege-Baum aus der Kürzeste-Wege-Linie ist der Kontrast). Geplant sind elf Stücke, dies ist die Wurzel:
