@@ -4,18 +4,18 @@
 
 Erstes Stück (Wurzel) der **Spannbaum-Reihe** der "Konzepte"-Reihe für die Website "Sebastian Hanisch – Operations Research und Machine Learning". Ein Depot und n Filialen liegen auf einer Karte; gesucht ist das Leitungsnetz (Fernwärme, Glasfaser, Sammelleitung), das **alle** verbindet und dabei möglichst wenig Trasse kostet: ein **minimaler Spannbaum** (MST). **Kruskal** (1956) sortiert alle möglichen Verbindungen nach Kosten und geht sie der Reihe nach durch: eine Kante wird **angenommen**, wenn sie zwei bisher getrennte Gruppen verbindet, und **verworfen**, wenn sie einen Kreis schließen würde. Die Frage "sind diese beiden schon verbunden?" beantwortet **Union-Find**. Der Baum wächst nicht von einem Punkt aus, sondern aus vielen kleinen Komponenten zusammen.
 
-**Einordnung in die Reihe:** im Portfolio gab es zu Spannbäumen bisher nichts (Kanten hierher: Single-Linkage-Clustering in [agglomerative-demo](../agglomerative-demo) ist ein MST auf Distanzen; die Basislösung des Netzwerksimplex in [network-flow-demo](../network-flow-demo) ist ein Spannbaum; der Kürzeste-Wege-Baum aus der Kürzeste-Wege-Linie ist der Kontrast). Geplant sind elf Stücke, dies ist die Wurzel:
+**Einordnung in die Reihe:** im Portfolio gab es zu Spannbäumen bisher nichts (Kanten hierher: Single-Linkage-Clustering in [agglomerative-demo](../agglomerative-demo) ist ein MST auf Distanzen; die Basislösung des Netzwerksimplex in [network-flow-demo](../network-flow-demo) ist ein Spannbaum; der Kürzeste-Wege-Baum aus der Kürzeste-Wege-Linie ist der Kontrast). Die Reihe hat elf Stücke (alle gebaut), dies ist die Wurzel:
 
 ```
 Kruskal (Wurzel)                                                                           [DIESES STÜCK]
- ├─ Prim (Kontrast: wächst von einem Punkt)                                                [nicht gebaut]
- ├─ Borůvka (Kontrast: alle Komponenten parallel)                                          [nicht gebaut]
- ├─ Euklidischer MST (keine n²-Kantenliste, Delaunay)                                      [nicht gebaut]
- ├─ Gerichteter Spannbaum (Chu-Liu/Edmonds)                                                [nicht gebaut]
- ├─ Bottleneck-/Grad-/Hop-beschränkter Spannbaum → Kapazitierter MST                       [nicht gebaut]
- ├─ Steiner-Baum → Prize-Collecting Steiner-Baum                                           [nicht gebaut]
- ├─ MST-Sensitivität & dynamischer MST                                                     [nicht gebaut]
- └─ Zufällige Spannbäume & Kirchhoff                                                       [nicht gebaut]
+ ├─ Prim (Kontrast: wächst von einem Punkt)                                           [gebaut: prim-demo]
+ ├─ Borůvka (Kontrast: alle Komponenten parallel)                                  [gebaut: boruvka-demo]
+ ├─ Euklidischer MST (keine n²-Kantenliste, Delaunay)                        [gebaut: euclidean-mst-demo]
+ ├─ Gerichteter Spannbaum (Chu-Liu/Edmonds)                                   [gebaut: arborescence-demo]
+ ├─ Bottleneck-/Grad-/Hop-beschränkter Spannbaum → Kapazitierter MST [gebaut: constrained-mst-demo, cmst-demo]
+ ├─ Steiner-Baum → Prize-Collecting Steiner-Baum                   [gebaut: steiner-tree-demo, pcst-demo]
+ ├─ MST-Sensitivität & dynamischer MST                                     [gebaut: mst-sensitivity-demo]
+ └─ Zufällige Spannbäume & Kirchhoff                                  [gebaut: random-spanning-tree-demo]
 ```
 
 Ergebnis in Kürze: **Der billigste Baum spart viel, aber er ist nicht kurz, und er ist nicht stabil.** Gegenüber getrennten Einzelleitungen spart er bei 30 Filialen **73,7 %** (52 % bei 10, 90 % bei 160 Filialen). Der Preis: die Wege zum Depot sind im Baum im Median **1,37-mal**, im Maximum **3,32-mal** so lang wie der kürzeste Weg (bei 160 Filialen bis **7,95-mal**); der Kürzeste-Wege-Baum kostet dafür 47 % mehr. Ein Rauschen von ±1 % auf allen Kantenkosten ändert den Baum im Median in **30 %** der Läufe (bei auf ganze km gerundeten Kosten 80 %). Kruskal selbst muss nur einen Teil der Kanten ansehen (63 % bei k = 6 Nachbarn, **18 %** beim vollständigen Graphen), und beim Union-Find holt die **Pfadhalbierung allein** fast alles heraus - die Vereinigung nach Rang allein deutlich weniger.
@@ -66,11 +66,11 @@ Die einzelne Instanz weicht von den Medianen ab - die Mediane sind die belastbar
 
 ## Was nicht funktioniert hat / Grenzen
 
-- **Der billigste Baum ist ein gutes Netz - nur bedingt.** Er ist eine reine Kostenantwort: Wege zum Depot bis zum 3,3-Fachen (bei 160 Filialen 8-Fachen) des kürzesten Weges. Wer Umwege begrenzen will, braucht Grad-, Hop- oder Kapazitätsgrenzen (geplante Nachfolger).
+- **Der billigste Baum ist ein gutes Netz - nur bedingt.** Er ist eine reine Kostenantwort: Wege zum Depot bis zum 3,3-Fachen (bei 160 Filialen 8-Fachen) des kürzesten Weges. Wer Umwege begrenzen will, braucht Grad-, Hop- oder Kapazitätsgrenzen (Nachfolger der Reihe).
 - **Der Baum ist nicht stabil.** ±1 % Rauschen ändert ihn in 30 % der Läufe; bei kleinen Instanzen (10, 20 Filialen) in keinem, bei 160 in 70 %. Die Sensitivität wird in einem eigenen Stück untersucht.
 - **Erwartung "naives Union-Find ist auf Zufallsinstanzen kaum schlechter" - widerlegt in der Größenordnung:** auf Zufallsinstanzen kostet der naive Wald bei n = 160 rund 4,5-mal so viele Zeigerschritte wie die volle Variante (4001 gegen 881), auf der Ketten-Instanz 27-mal (12560 gegen 471). Aber: die Pfadhalbierung allein (945) kommt nahe an die volle Variante (881), die Vereinigung nach Rang allein (1889) nicht.
 - **Geländezuschlag:** ändert die Ersparnis praktisch nicht (Spanne 0,6 Prozentpunkte über den ganzen Bereich); er verschiebt nur, welcher Baum entsteht.
-- **Nicht gebaut:** Prim, Borůvka, Euklidischer MST, gerichtete Spannbäume, Nebenbedingungen, Steiner-Bäume, Sensitivität und dynamischer MST, Kirchhoff. Die asymptotisch besseren Verfahren (Karger-Klein-Tarjan 1995, erwartet linear; Chazelle 2000; Pettie-Ramachandran 2002, optimal) werden nicht gebaut: in der Praxis gewinnen (Filter-)Kruskal, Prim und Borůvka-Varianten auf GPUs.
+- **Nicht in diesem Stück:** Prim, Borůvka, Euklidischer MST, gerichtete Spannbäume, Nebenbedingungen, Steiner-Bäume, Sensitivität und dynamischer MST, Kirchhoff (alle als eigene Stücke der Reihe gebaut). Die asymptotisch besseren Verfahren (Karger-Klein-Tarjan 1995, erwartet linear; Chazelle 2000; Pettie-Ramachandran 2002, optimal) werden nicht gebaut: in der Praxis gewinnen (Filter-)Kruskal, Prim und Borůvka-Varianten auf GPUs.
 - **Synthetische Instanzen:** Punkte im Quadrat, euklidische Kosten mit Zufallszuschlag, kein Straßennetz, keine Kapazitäten oder Richtungen; die Ketten-Instanz hat abstrakte Kosten (Ersparnis und Umwege sind dort ohne Bedeutung und ausgeblendet).
 
 ## Verifikation
@@ -115,6 +115,4 @@ pytest tests/ -v
 
 ---
 
-Teil des [Operations-Research-Demo-Portfolios](https://sebastianhanisch.net/demos.html) von
-[Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning.
-Interesse an einer maßgeschneiderten Lösung? [Kontakt aufnehmen](https://sebastianhanisch.net/kontakt.html).
+Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zur Reihe: [Spannbäume: vom Kruskal bis zum Zufallsbaum](https://sebastianhanisch.net/konzepte-spannbaum.html).

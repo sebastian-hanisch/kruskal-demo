@@ -83,7 +83,7 @@ wächst nicht von einem Punkt aus, sondern aus vielen kleinen Gruppen zusammen. 
 """
 )
 st.caption(
-    "Wurzel der Spannbaum-Reihe; geplante Nachfolger (nicht gebaut): Prim, Borůvka, Euklidischer MST, Gerichteter Spannbaum, Grad-/Hop-beschränkter und Kapazitierter MST, Steiner-Baum, "
+    "Wurzel der Spannbaum-Reihe; Nachfolger (alle gebaut): Prim, Borůvka, Euklidischer MST, Gerichteter Spannbaum, Grad-/Hop-beschränkter und Kapazitierter MST, Steiner-Baum, "
     "Prize-Collecting Steiner-Baum, Sensitivität und dynamischer MST, zufällige Spannbäume und Kirchhoff."
 )
 
@@ -287,7 +287,7 @@ st.markdown(
 | **Der Baum ist eindeutig** | Nur bei paarweise verschiedenen Kosten. Bei gerundeten Kosten gibt es oft mehrere gleich billige Bäume; die Tie-Reihenfolge entscheidet, welcher herauskommt. | - |
 | **Der Baum ist stabil** | Nein: ein Rauschen von ±1 % auf den Kosten ändert ihn im Median in 30 % der Läufe (mit gerundeten Kosten 80 %). Kleine Preisänderungen können ein ganz anderes Netz bedeuten. | Sensitivität und dynamischer MST (Nachfolger) |
 | **Alle Filialen müssen angeschlossen werden, nur Filialen sind Knoten** | Kruskal nimmt nur Kanten zwischen den gegebenen Knoten. Zusätzliche Verzweigungspunkte (Steiner-Punkte) können das Netz kürzen, sind aber NP-schwer. | Steiner-Baum (Nachfolger) |
-| **Union-Find braucht Gegenmaßnahmen** | Ohne Kompression und Rang wird es auf der Ketten-Instanz quadratisch. Auf Zufallsinstanzen kostet der naive Wald im Median rund 4x so viele Zeigerschritte wie die volle Variante; Pfadhalbierung allein holt fast alles heraus. | - |
+| **Union-Find braucht Gegenmaßnahmen** | Ohne Kompression und Rang wird es auf der Ketten-Instanz quadratisch. Auf Zufallsinstanzen kostet der naive Wald bei 160 Filialen im Median rund 4,5x so viele Zeigerschritte wie die volle Variante; Pfadhalbierung allein holt fast alles heraus. | - |
 | **Synthetische Instanzen** | Punkte im Quadrat, euklidische Kosten mit Zufallszuschlag, kein Straßennetz, keine Kapazitäten oder Richtungen. Andere Netzstrukturen wurden nicht gemessen. | Echte Trassen (hier nicht gebaut) |
 """
 )
@@ -320,6 +320,6 @@ Implementiert in `kru_algorithm.py` (Kruskal, Filter-Kruskal, Referenzen), `kru_
 st.markdown("---")
 st.caption(
     "Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – "
-    "Operations Research und Machine Learning. Interesse an einer maßgeschneiderten Lösung für "
-    "Ihr Unternehmen? [Kontakt aufnehmen](https://sebastianhanisch.net/kontakt.html)"
+    "Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). "
+    "Mehr zur Reihe: [Spannbäume: vom Kruskal bis zum Zufallsbaum](https://sebastianhanisch.net/konzepte-spannbaum.html)."
 )
